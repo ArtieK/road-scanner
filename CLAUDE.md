@@ -28,6 +28,7 @@ A city-agnostic web app that compares transportation options (rideshare, bikes, 
 - **Backend**: Python + FastAPI + Poetry
 - **APIs**: Uber Estimates, Divvy GBFS, Google Maps (Places + Directions), CTA
 - **Hosting**: Vercel/Netlify (frontend) + Railway/Render (backend)
+- **Docker**: From the start (docker-compose for backend + frontend)
 
 ---
 
@@ -69,7 +70,7 @@ Backend (FastAPI)
    - Define `TransportEstimate` model
    - Define `MicromobilityService` protocol
 
-3. **Uber Integration** (`/backend/app/services/rideshare/uber.py`)
+3. **Uber Integration** (`/backend/app/services/rideshare/uber.py`)[CURRENT]
    - Implement `GET /estimates/price` call
    - Parse response into `TransportEstimate`
    - Deep link generator for Uber app
@@ -204,7 +205,12 @@ road-scanner/
 
 ## API Keys Required
 
-- **Uber**: Test app access (GET /estimates/price) - confirmed
+- **Uber**: OAuth 2.0 access token (Bearer token)
+  - **Important**: Uber no longer offers server tokens - we use OAuth access tokens
+  - Token type: `Bearer` (not `Token`)
+  - Test environment: `https://test-api.uber.com/v1.2`
+  - Production environment: `https://api.uber.com/v1.2` (use test for development)
+  - Access tokens expire after 30 days and may require refresh flow
 - **Google Maps**: Places API + Directions API + Distance Matrix
 - **Divvy**: Public GBFS endpoints (no key needed)
 - **CTA**: Free API key from transitchicago.com
